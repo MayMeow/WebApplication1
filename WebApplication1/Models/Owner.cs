@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class Device
+    public class Owner
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Manufacturer { get; set; }
-        public Owner Owner { get; set; }
+        public ICollection<Device> Devices { get; set; }
     }
 }

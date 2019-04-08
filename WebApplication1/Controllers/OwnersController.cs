@@ -9,22 +9,22 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class DevicesController : Controller
+    public class OwnersController : Controller
     {
         private readonly WebApplication1Context _context;
 
-        public DevicesController(WebApplication1Context context)
+        public OwnersController(WebApplication1Context context)
         {
             _context = context;
         }
 
-        // GET: Devices
+        // GET: Owners
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Device.ToListAsync());
+            return View(await _context.Owner.ToListAsync());
         }
 
-        // GET: Devices/Details/5
+        // GET: Owners/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device
+            var owner = await _context.Owner
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (device == null)
+            if (owner == null)
             {
                 return NotFound();
             }
 
-            return View(device);
+            return View(owner);
         }
 
-        // GET: Devices/Create
+        // GET: Owners/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Devices/Create
+        // POST: Owners/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Manufacturer")] Device device)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Owner owner)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(device);
+                _context.Add(owner);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(device);
+            return View(owner);
         }
 
-        // GET: Devices/Edit/5
+        // GET: Owners/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device.FindAsync(id);
-            if (device == null)
+            var owner = await _context.Owner.FindAsync(id);
+            if (owner == null)
             {
                 return NotFound();
             }
-            return View(device);
+            return View(owner);
         }
 
-        // POST: Devices/Edit/5
+        // POST: Owners/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Manufacturer")] Device device)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Owner owner)
         {
-            if (id != device.Id)
+            if (id != owner.Id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    _context.Update(device);
+                    _context.Update(owner);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DeviceExists(device.Id))
+                    if (!OwnerExists(owner.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(device);
+            return View(owner);
         }
 
-        // GET: Devices/Delete/5
+        // GET: Owners/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device
+            var owner = await _context.Owner
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (device == null)
+            if (owner == null)
             {
                 return NotFound();
             }
 
-            return View(device);
+            return View(owner);
         }
 
-        // POST: Devices/Delete/5
+        // POST: Owners/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var device = await _context.Device.FindAsync(id);
-            _context.Device.Remove(device);
+            var owner = await _context.Owner.FindAsync(id);
+            _context.Owner.Remove(owner);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DeviceExists(int id)
+        private bool OwnerExists(int id)
         {
-            return _context.Device.Any(e => e.Id == id);
+            return _context.Owner.Any(e => e.Id == id);
         }
     }
 }
